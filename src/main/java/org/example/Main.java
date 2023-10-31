@@ -15,8 +15,11 @@ public class Main {
         while (flag) {
             flag = false;
             Scanner scanner = new Scanner(System.in);
+            System.out.print("логин: ");
             String login = scanner.nextLine().trim();
+            System.out.print("пароль: ");
             String password = scanner.nextLine().trim();
+            System.out.print("подтверждение пароля: ");
             String confirmPassword = scanner.nextLine().trim();
             try {
                 UserAuthentication.userCheck(login, password, confirmPassword);
@@ -45,24 +48,46 @@ public class Main {
 
         boolean flagTask2 = true;
         while (flagTask2) {
-            flagTask2 = false;
+
             Scanner scanner = new Scanner(System.in);
+            System.out.print("Имя пользователя: ");
             String user = scanner.nextLine().trim();
+            System.out.print("Название продукта: ");
             String product = scanner.nextLine().trim();
             try {
+                System.out.print("Количество продукта: ");
                 int quantity = scanner.nextInt();
                 store.createOrder(user, product, quantity);
             } catch (ProductNotFoundException | WrongQuantityException e) {
                 System.out.println(e.getMessage());
-                flagTask2 = true;
+                continue;
             } catch (UsrNotFoundException e) {
                 e.printStackTrace();
-                flagTask2 = true;
+                continue;
             } catch (InputMismatchException e) {
                 System.out.println("введите число");
-                flagTask2 = true;
+                continue;
             }
 
+            boolean continueInputFlag = true;
+            while (continueInputFlag) {
+                continueInputFlag = false;
+                System.out.println("Продолжить?(y/n)");
+
+                String continueInput = new Scanner(System.in).nextLine();
+                switch (continueInput){
+                    case "y":
+                        break;
+                    case "n":
+                        flagTask2 = false;
+                        break;
+                    default:
+                        System.out.println("y-продолжить / n - завершить работу");
+                        continueInputFlag = true;
+                        break;
+                }
+            }
+            System.out.println();
         }
         System.out.println("Совершено: "+store.getOrders().size()+" покупок");
 
