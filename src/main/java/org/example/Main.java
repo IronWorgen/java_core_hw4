@@ -64,6 +64,7 @@ public class Main {
             }
 
         }
+        System.out.println("Совершено: "+store.getOrders().size()+" покупок");
 
 
     }
